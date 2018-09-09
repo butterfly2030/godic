@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goddice.dal.dao.BcDhandballMapper" >
+  <resultMap id="BaseResultMap" type="com.goddice.model.BcDhandball" >
+    <result column="tid" property="tid" jdbcType="VARCHAR" />
+    <result column="v_number" property="vNumber" jdbcType="VARCHAR" />
+    <result column="v_per_position1" property="vPerPosition1" jdbcType="VARCHAR" />
+    <result column="v_per_position2" property="vPerPosition2" jdbcType="VARCHAR" />
+    <result column="v_per_position3" property="vPerPosition3" jdbcType="VARCHAR" />
+    <result column="v_per_position4" property="vPerPosition4" jdbcType="VARCHAR" />
+    <result column="v_per_position5" property="vPerPosition5" jdbcType="VARCHAR" />
+    <result column="v_per_position6" property="vPerPosition6" jdbcType="VARCHAR" />
+    <result column="v_suf_position1" property="vSufPosition1" jdbcType="VARCHAR" />
+    <result column="d_create_date" property="dCreateDate" jdbcType="TIMESTAMP" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+    <result column="remark3" property="remark3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    tid, v_number, v_per_position1, v_per_position2, v_per_position3, v_per_position4, 
+    v_per_position5, v_per_position6, v_suf_position1, d_create_date, remark1, remark2, 
+    remark3
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.goddice.model.BcDhandballExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_bc_dhandball
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.goddice.model.BcDhandballExample" >
+    delete from t_bc_dhandball
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.goddice.model.BcDhandball" >
+    <selectKey resultType="java.lang.String" keyProperty="tid" order="BEFORE" >
+       select replace(uuid(),'-','')
+    </selectKey>
+    insert into t_bc_dhandball (tid, v_number, v_per_position1, 
+      v_per_position2, v_per_position3, v_per_position4, 
+      v_per_position5, v_per_position6, v_suf_position1, 
+      d_create_date, remark1, remark2, 
+      remark3)
+    values (#{tid,jdbcType=VARCHAR}, #{vNumber,jdbcType=VARCHAR}, #{vPerPosition1,jdbcType=VARCHAR}, 
+      #{vPerPosition2,jdbcType=VARCHAR}, #{vPerPosition3,jdbcType=VARCHAR}, #{vPerPosition4,jdbcType=VARCHAR}, 
+      #{vPerPosition5,jdbcType=VARCHAR}, #{vPerPosition6,jdbcType=VARCHAR}, #{vSufPosition1,jdbcType=VARCHAR}, 
+      #{dCreateDate,jdbcType=TIMESTAMP}, #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goddice.model.BcDhandball" >
+    <selectKey resultType="java.lang.String" keyProperty="tid" order="BEFORE" >
+       select replace(uuid(),'-','')
+    </selectKey>
+    insert into t_bc_dhandball
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      tid,
+      <if test="vNumber != null" >
+        v_number,
+      </if>
+      <if test="vPerPosition1 != null" >
+        v_per_position1,
+      </if>
+      <if test="vPerPosition2 != null" >
+        v_per_position2,
+      </if>
+      <if test="vPerPosition3 != null" >
+        v_per_position3,
+      </if>
+      <if test="vPerPosition4 != null" >
+        v_per_position4,
+      </if>
+      <if test="vPerPosition5 != null" >
+        v_per_position5,
+      </if>
+      <if test="vPerPosition6 != null" >
+        v_per_position6,
+      </if>
+      <if test="vSufPosition1 != null" >
+        v_suf_position1,
+      </if>
+      <if test="dCreateDate != null" >
+        d_create_date,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+      <if test="remark3 != null" >
+        remark3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{tid,jdbcType=VARCHAR},
+      <if test="vNumber != null" >
+        #{vNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="vPerPosition1 != null" >
+        #{vPerPosition1,jdbcType=VARCHAR},
+      </if>
+      <if test="vPerPosition2 != null" >
+        #{vPerPosition2,jdbcType=VARCHAR},
+      </if>
+      <if test="vPerPosition3 != null" >
+        #{vPerPosition3,jdbcType=VARCHAR},
+      </if>
+      <if test="vPerPosition4 != null" >
+        #{vPerPosition4,jdbcType=VARCHAR},
+      </if>
+      <if test="vPerPosition5 != null" >
+        #{vPerPosition5,jdbcType=VARCHAR},
+      </if>
+      <if test="vPerPosition6 != null" >
+        #{vPerPosition6,jdbcType=VARCHAR},
+      </if>
+      <if test="vSufPosition1 != null" >
+        #{vSufPosition1,jdbcType=VARCHAR},
+      </if>
+      <if test="dCreateDate != null" >
+        #{dCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.goddice.model.BcDhandballExample" resultType="java.lang.Integer" >
+    select count(*) from t_bc_dhandball
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_bc_dhandball
+    <set >
+      <if test="record.tid != null" >
+        tid = #{record.tid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vNumber != null" >
+        v_number = #{record.vNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vPerPosition1 != null" >
+        v_per_position1 = #{record.vPerPosition1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vPerPosition2 != null" >
+        v_per_position2 = #{record.vPerPosition2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vPerPosition3 != null" >
+        v_per_position3 = #{record.vPerPosition3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vPerPosition4 != null" >
+        v_per_position4 = #{record.vPerPosition4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vPerPosition5 != null" >
+        v_per_position5 = #{record.vPerPosition5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vPerPosition6 != null" >
+        v_per_position6 = #{record.vPerPosition6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vSufPosition1 != null" >
+        v_suf_position1 = #{record.vSufPosition1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dCreateDate != null" >
+        d_create_date = #{record.dCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark1 != null" >
+        remark1 = #{record.remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark2 != null" >
+        remark2 = #{record.remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark3 != null" >
+        remark3 = #{record.remark3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_bc_dhandball
+    set tid = #{record.tid,jdbcType=VARCHAR},
+      v_number = #{record.vNumber,jdbcType=VARCHAR},
+      v_per_position1 = #{record.vPerPosition1,jdbcType=VARCHAR},
+      v_per_position2 = #{record.vPerPosition2,jdbcType=VARCHAR},
+      v_per_position3 = #{record.vPerPosition3,jdbcType=VARCHAR},
+      v_per_position4 = #{record.vPerPosition4,jdbcType=VARCHAR},
+      v_per_position5 = #{record.vPerPosition5,jdbcType=VARCHAR},
+      v_per_position6 = #{record.vPerPosition6,jdbcType=VARCHAR},
+      v_suf_position1 = #{record.vSufPosition1,jdbcType=VARCHAR},
+      d_create_date = #{record.dCreateDate,jdbcType=TIMESTAMP},
+      remark1 = #{record.remark1,jdbcType=VARCHAR},
+      remark2 = #{record.remark2,jdbcType=VARCHAR},
+      remark3 = #{record.remark3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <select id="queryListPage" resultMap="BaseResultMap">
+          select
+    <include refid="Base_Column_List" />
+    from t_bc_dhandball ORDER BY
+	CONVERT (v_number, SIGNED) DESC
+	limit #{begin},#{size}
+  </select>
+</mapper>

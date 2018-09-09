@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+                        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd  
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+                        http://www.springframework.org/schema/tx   
+                        http://www.springframework.org/schema/tx/spring-tx-3.2.xsd 
+                       http://www.springframework.org/schema/aop   
+                       http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+	<!-- 该包下的类支持注解，表示会被当作{@code mybatis mapper}处理 配置了之后表示可以自动引入mapper类 -->
+	<!-- <mybatis:scan base-package="com.alibaba.dao" /> -->
+	
+	<!--引入属性文件 -->
+	<context:property-placeholder location="classpath:config.properties" />
+
+	<!--数据库连接 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<property name="url" value="${jdbc_url}" />
+		<property name="username" value="${jdbc_username}" />
+		<property name="password" value="${jdbc_password}" />
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize">
+			<value>1</value>
+		</property>
+		<property name="maxActive">
+			<value>5</value>
+		</property>
+		<property name="minIdle">
+			<value>1</value>
+		</property>
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait">
+			<value>60000</value>
+		</property>
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters">
+			<value>stat</value>
+		</property>
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis">
+			<value>60000</value>
+		</property>
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis">
+			<value>300000</value>
+		</property>
+		<!-- <property name="validationQuery"><value>SELECT 'x'</value></property> 
+			<property name="testWhileIdle"><value>true</value></property> <property name="testOnBorrow"><value>false</value></property> 
+			<property name="testOnReturn"><value>false</value></property> <property name="poolPreparedStatements"><value>true</value></property> 
+			<property name="maxOpenPreparedStatements"><value>20</value></property> -->
+	</bean>
+
+	<!-- mybatis配置 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 加载mybatis的配置文件 -->
+
+		<!-- <property name="configLocation" value="classpath:config/mybatis-config.xml" 
+			/> -->
+
+		<!-- 自动扫描model目录中的映射xml文件，省去了在config中手工配置 -->
+
+		<property name="mapperLocations" value="classpath:com/goddice/dal/mapping/**/*.xml" />
+
+		<!-- 为指定包下的类指定别名，省去了编写全限定名，默认使用类名 -->
+
+		<property name="typeAliasesPackage" value="com.goddice" />
+
+	</bean>
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.goddice.dal.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+
+	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+		<property name="rollbackOnCommitFailure" value="true"></property>
+		<property name="transactionSynchronization" value="1"></property>
+	</bean>
+	<!-- 启用事务 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="create*" propagation="REQUIRED"
+				rollback-for="java.lang.Exception" />
+				<tx:method name="add*" propagation="REQUIRED"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="copy*" propagation="REQUIRED"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="update*" propagation="REQUIRED"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="delete*" propagation="REQUIRED"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="find*" read-only="true"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="list*" read-only="true"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="is*" read-only="true"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="*" read-only="true"
+				rollback-for="java.lang.Exception" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- AOP代理设置 -->
+	<aop:config>
+		<aop:advisor pointcut="execution(* com.goddice.service.*.*(..))"
+			advice-ref="txAdvice" />
+	</aop:config>
+
+	<!-- enable transaction annotation support -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>    

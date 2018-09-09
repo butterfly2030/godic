@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goddice.dal.dao.Sys3DStandardMapper" >
+  <resultMap id="BaseResultMap" type="com.goddice.model.Sys3DStandard" >
+    <result column="tid" property="tid" jdbcType="VARCHAR" />
+    <result column="hundreds" property="hundreds" jdbcType="INTEGER" />
+    <result column="decade" property="decade" jdbcType="INTEGER" />
+    <result column="unit" property="unit" jdbcType="INTEGER" />
+    <result column="arrange" property="arrange" jdbcType="VARCHAR" />
+    <result column="sum" property="sum" jdbcType="INTEGER" />
+    <result column="distance" property="distance" jdbcType="INTEGER" />
+    <result column="sequence" property="sequence" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    tid, hundreds, decade, unit, arrange, sum, distance, sequence
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.goddice.model.Sys3DStandardExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_sys_3d_standard
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.goddice.model.Sys3DStandardExample" >
+    delete from t_sys_3d_standard
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.goddice.model.Sys3DStandard" >
+    <selectKey resultType="java.lang.String" keyProperty="tid" order="BEFORE" >
+       select replace(uuid(),'-','')
+    </selectKey>
+    insert into t_sys_3d_standard (tid, hundreds, decade, 
+      unit, arrange, sum, 
+      distance, sequence)
+    values (#{tid,jdbcType=VARCHAR}, #{hundreds,jdbcType=INTEGER}, #{decade,jdbcType=INTEGER}, 
+      #{unit,jdbcType=INTEGER}, #{arrange,jdbcType=VARCHAR}, #{sum,jdbcType=INTEGER}, 
+      #{distance,jdbcType=INTEGER}, #{sequence,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goddice.model.Sys3DStandard" >
+    <selectKey resultType="java.lang.String" keyProperty="tid" order="BEFORE" >
+       select replace(uuid(),'-','')
+    </selectKey>
+    insert into t_sys_3d_standard
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      tid,
+      <if test="hundreds != null" >
+        hundreds,
+      </if>
+      <if test="decade != null" >
+        decade,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="arrange != null" >
+        arrange,
+      </if>
+      <if test="sum != null" >
+        sum,
+      </if>
+      <if test="distance != null" >
+        distance,
+      </if>
+      <if test="sequence != null" >
+        sequence,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{tid,jdbcType=VARCHAR},
+      <if test="hundreds != null" >
+        #{hundreds,jdbcType=INTEGER},
+      </if>
+      <if test="decade != null" >
+        #{decade,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=INTEGER},
+      </if>
+      <if test="arrange != null" >
+        #{arrange,jdbcType=VARCHAR},
+      </if>
+      <if test="sum != null" >
+        #{sum,jdbcType=INTEGER},
+      </if>
+      <if test="distance != null" >
+        #{distance,jdbcType=INTEGER},
+      </if>
+      <if test="sequence != null" >
+        #{sequence,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.goddice.model.Sys3DStandardExample" resultType="java.lang.Integer" >
+    select count(*) from t_sys_3d_standard
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_sys_3d_standard
+    <set >
+      <if test="record.tid != null" >
+        tid = #{record.tid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hundreds != null" >
+        hundreds = #{record.hundreds,jdbcType=INTEGER},
+      </if>
+      <if test="record.decade != null" >
+        decade = #{record.decade,jdbcType=INTEGER},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=INTEGER},
+      </if>
+      <if test="record.arrange != null" >
+        arrange = #{record.arrange,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sum != null" >
+        sum = #{record.sum,jdbcType=INTEGER},
+      </if>
+      <if test="record.distance != null" >
+        distance = #{record.distance,jdbcType=INTEGER},
+      </if>
+      <if test="record.sequence != null" >
+        sequence = #{record.sequence,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_sys_3d_standard
+    set tid = #{record.tid,jdbcType=VARCHAR},
+      hundreds = #{record.hundreds,jdbcType=INTEGER},
+      decade = #{record.decade,jdbcType=INTEGER},
+      unit = #{record.unit,jdbcType=INTEGER},
+      arrange = #{record.arrange,jdbcType=VARCHAR},
+      sum = #{record.sum,jdbcType=INTEGER},
+      distance = #{record.distance,jdbcType=INTEGER},
+      sequence = #{record.sequence,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

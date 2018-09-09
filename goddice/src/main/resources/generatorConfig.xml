@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+    <!DOCTYPE generatorConfiguration 
+      PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+      "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+     
+    <generatorConfiguration>
+      <classPathEntry location="C:\Users\Administrator\.m2\repository\mysql\mysql-connector-java\5.1.34\mysql-connector-java-5.1.34.jar" />  
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+      
+      <commentGenerator>
+        <property name="suppressAllComments" value="true"/>
+      </commentGenerator>
+     <!--  org.postgresql.Driver -->
+      <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+            connectionURL="jdbc:mysql://localhost:3306/goddice?useUnicode=true&amp;characterEncoding=UTF-8"
+            userId="god" password="god">
+        </jdbcConnection>
+      <javaTypeResolver>
+         <property name="forceBigDecimals" value="false"/>
+      </javaTypeResolver>
+      
+      <javaModelGenerator targetPackage="com.goddice.model" targetProject="src/main/java">
+          <property name="enableSubPackages" value="true"/>
+          <property name="trimStrings" value="true"/>
+      </javaModelGenerator>
+       
+      <sqlMapGenerator targetPackage="com.goddice.dal.mapping" targetProject="src/main/java">
+           <property name="enableSubPackages" value="true"/>
+      </sqlMapGenerator>
+       
+      <javaClientGenerator type="XMLMAPPER" targetPackage="com.goddice.dal.dao" targetProject="src/main/java">
+        <property name="enableSubPackages" value="true"/>
+      </javaClientGenerator>
+      <table  tableName="t_sys_3d_standard" domainObjectName="Sys3DStandard">
+         <generatedKey column="tid" sqlStatement=" select replace(uuid(),'-','')" />
+      </table>
+<!--             <table  tableName="t_bc_dhandball" domainObjectName="BcDhandball">
+         <generatedKey column="tid" sqlStatement=" select replace(uuid(),'-','')" />
+      </table>
+            <table  tableName="t_sys_testhxl" domainObjectName="tSysTesthxl">
+         <generatedKey column="tid" sqlStatement=" select replace(uuid(),'-','')" />
+      </table> -->
+    </context>
+      
+    </generatorConfiguration>

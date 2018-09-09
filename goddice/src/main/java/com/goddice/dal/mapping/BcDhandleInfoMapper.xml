@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goddice.dal.dao.BcDhandleInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.goddice.model.BcDhandleInfo" >
+    <result column="dhandler_tid" property="dhandlerTid" jdbcType="VARCHAR" />
+    <result column="jackpot" property="jackpot" jdbcType="DECIMAL" />
+    <result column="first_prize_note" property="firstPrizeNote" jdbcType="BIGINT" />
+    <result column="second_prize_note" property="secondPrizeNote" jdbcType="BIGINT" />
+    <result column="third_prize_note" property="thirdPrizeNote" jdbcType="BIGINT" />
+    <result column="four_prize_note" property="fourPrizeNote" jdbcType="BIGINT" />
+    <result column="five_prize_note" property="fivePrizeNote" jdbcType="BIGINT" />
+    <result column="six_prize_note" property="sixPrizeNote" jdbcType="BIGINT" />
+    <result column="Betting_amount" property="bettingAmount" jdbcType="BIGINT" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="remark2" property="remark2" jdbcType="VARCHAR" />
+    <result column="tid" property="tid" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.goddice.model.BcDhandleInfo" extends="BaseResultMap" >
+    <result column="remark3" property="remark3" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    dhandler_tid, jackpot, first_prize_note, second_prize_note, third_prize_note, four_prize_note, 
+    five_prize_note, six_prize_note, Betting_amount, remark1, remark2, tid
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark3
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.goddice.model.BcDhandleInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_bc_dhandle_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.goddice.model.BcDhandleInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_bc_dhandle_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.goddice.model.BcDhandleInfoExample" >
+    delete from t_bc_dhandle_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.goddice.model.BcDhandleInfo" >
+    <selectKey resultType="java.lang.String" keyProperty="tid" order="BEFORE" >
+       select replace(uuid(),'-','')
+    </selectKey>
+    insert into t_bc_dhandle_info (dhandler_tid, jackpot, first_prize_note, 
+      second_prize_note, third_prize_note, four_prize_note, 
+      five_prize_note, six_prize_note, Betting_amount, 
+      remark1, remark2, tid, 
+      remark3)
+    values (#{dhandlerTid,jdbcType=VARCHAR}, #{jackpot,jdbcType=DECIMAL}, #{firstPrizeNote,jdbcType=BIGINT}, 
+      #{secondPrizeNote,jdbcType=BIGINT}, #{thirdPrizeNote,jdbcType=BIGINT}, #{fourPrizeNote,jdbcType=BIGINT}, 
+      #{fivePrizeNote,jdbcType=BIGINT}, #{sixPrizeNote,jdbcType=BIGINT}, #{bettingAmount,jdbcType=BIGINT}, 
+      #{remark1,jdbcType=VARCHAR}, #{remark2,jdbcType=VARCHAR}, #{tid,jdbcType=VARCHAR}, 
+      #{remark3,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goddice.model.BcDhandleInfo" >
+    <selectKey resultType="java.lang.String" keyProperty="tid" order="BEFORE" >
+       select replace(uuid(),'-','')
+    </selectKey>
+    insert into t_bc_dhandle_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dhandlerTid != null" >
+        dhandler_tid,
+      </if>
+      <if test="jackpot != null" >
+        jackpot,
+      </if>
+      <if test="firstPrizeNote != null" >
+        first_prize_note,
+      </if>
+      <if test="secondPrizeNote != null" >
+        second_prize_note,
+      </if>
+      <if test="thirdPrizeNote != null" >
+        third_prize_note,
+      </if>
+      <if test="fourPrizeNote != null" >
+        four_prize_note,
+      </if>
+      <if test="fivePrizeNote != null" >
+        five_prize_note,
+      </if>
+      <if test="sixPrizeNote != null" >
+        six_prize_note,
+      </if>
+      <if test="bettingAmount != null" >
+        Betting_amount,
+      </if>
+      <if test="remark1 != null" >
+        remark1,
+      </if>
+      <if test="remark2 != null" >
+        remark2,
+      </if>
+      tid,
+      <if test="remark3 != null" >
+        remark3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dhandlerTid != null" >
+        #{dhandlerTid,jdbcType=VARCHAR},
+      </if>
+      <if test="jackpot != null" >
+        #{jackpot,jdbcType=DECIMAL},
+      </if>
+      <if test="firstPrizeNote != null" >
+        #{firstPrizeNote,jdbcType=BIGINT},
+      </if>
+      <if test="secondPrizeNote != null" >
+        #{secondPrizeNote,jdbcType=BIGINT},
+      </if>
+      <if test="thirdPrizeNote != null" >
+        #{thirdPrizeNote,jdbcType=BIGINT},
+      </if>
+      <if test="fourPrizeNote != null" >
+        #{fourPrizeNote,jdbcType=BIGINT},
+      </if>
+      <if test="fivePrizeNote != null" >
+        #{fivePrizeNote,jdbcType=BIGINT},
+      </if>
+      <if test="sixPrizeNote != null" >
+        #{sixPrizeNote,jdbcType=BIGINT},
+      </if>
+      <if test="bettingAmount != null" >
+        #{bettingAmount,jdbcType=BIGINT},
+      </if>
+      <if test="remark1 != null" >
+        #{remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="remark2 != null" >
+        #{remark2,jdbcType=VARCHAR},
+      </if>
+      #{tid,jdbcType=VARCHAR},
+      <if test="remark3 != null" >
+        #{remark3,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.goddice.model.BcDhandleInfoExample" resultType="java.lang.Integer" >
+    select count(*) from t_bc_dhandle_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_bc_dhandle_info
+    <set >
+      <if test="record.dhandlerTid != null" >
+        dhandler_tid = #{record.dhandlerTid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jackpot != null" >
+        jackpot = #{record.jackpot,jdbcType=DECIMAL},
+      </if>
+      <if test="record.firstPrizeNote != null" >
+        first_prize_note = #{record.firstPrizeNote,jdbcType=BIGINT},
+      </if>
+      <if test="record.secondPrizeNote != null" >
+        second_prize_note = #{record.secondPrizeNote,jdbcType=BIGINT},
+      </if>
+      <if test="record.thirdPrizeNote != null" >
+        third_prize_note = #{record.thirdPrizeNote,jdbcType=BIGINT},
+      </if>
+      <if test="record.fourPrizeNote != null" >
+        four_prize_note = #{record.fourPrizeNote,jdbcType=BIGINT},
+      </if>
+      <if test="record.fivePrizeNote != null" >
+        five_prize_note = #{record.fivePrizeNote,jdbcType=BIGINT},
+      </if>
+      <if test="record.sixPrizeNote != null" >
+        six_prize_note = #{record.sixPrizeNote,jdbcType=BIGINT},
+      </if>
+      <if test="record.bettingAmount != null" >
+        Betting_amount = #{record.bettingAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark1 != null" >
+        remark1 = #{record.remark1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark2 != null" >
+        remark2 = #{record.remark2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tid != null" >
+        tid = #{record.tid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark3 != null" >
+        remark3 = #{record.remark3,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_bc_dhandle_info
+    set dhandler_tid = #{record.dhandlerTid,jdbcType=VARCHAR},
+      jackpot = #{record.jackpot,jdbcType=DECIMAL},
+      first_prize_note = #{record.firstPrizeNote,jdbcType=BIGINT},
+      second_prize_note = #{record.secondPrizeNote,jdbcType=BIGINT},
+      third_prize_note = #{record.thirdPrizeNote,jdbcType=BIGINT},
+      four_prize_note = #{record.fourPrizeNote,jdbcType=BIGINT},
+      five_prize_note = #{record.fivePrizeNote,jdbcType=BIGINT},
+      six_prize_note = #{record.sixPrizeNote,jdbcType=BIGINT},
+      Betting_amount = #{record.bettingAmount,jdbcType=BIGINT},
+      remark1 = #{record.remark1,jdbcType=VARCHAR},
+      remark2 = #{record.remark2,jdbcType=VARCHAR},
+      tid = #{record.tid,jdbcType=VARCHAR},
+      remark3 = #{record.remark3,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_bc_dhandle_info
+    set dhandler_tid = #{record.dhandlerTid,jdbcType=VARCHAR},
+      jackpot = #{record.jackpot,jdbcType=DECIMAL},
+      first_prize_note = #{record.firstPrizeNote,jdbcType=BIGINT},
+      second_prize_note = #{record.secondPrizeNote,jdbcType=BIGINT},
+      third_prize_note = #{record.thirdPrizeNote,jdbcType=BIGINT},
+      four_prize_note = #{record.fourPrizeNote,jdbcType=BIGINT},
+      five_prize_note = #{record.fivePrizeNote,jdbcType=BIGINT},
+      six_prize_note = #{record.sixPrizeNote,jdbcType=BIGINT},
+      Betting_amount = #{record.bettingAmount,jdbcType=BIGINT},
+      remark1 = #{record.remark1,jdbcType=VARCHAR},
+      remark2 = #{record.remark2,jdbcType=VARCHAR},
+      tid = #{record.tid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

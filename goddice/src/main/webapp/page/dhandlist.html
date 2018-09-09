@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>goddic</title>
+	<link rel="stylesheet" type="text/css" href="../js/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../js/themes/icon.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/locale/easyui-lang-zh_CN.js" ></script>
+<!-- 	<script type="text/javascript" src="../page_js/dhandlist.js" ></script>
+ -->		
+</head>
+<body>
+<h2>双色球走势表</h2>
+	<p>双色球</p>
+	<div style="margin:2px 0;"></div>
+	<!-- <table id="test"></table> -->
+	<table class="easyui-datagrid" title="DataGrid Cell Style" style="width:auto;height:800;fit:true;"
+			data-options="
+				singleSelect: true,
+				iconCls: 'icon-save',
+				url: '../queryDhandball',
+				method: 'get'" pagination="true">
+		<thead>
+			<tr>
+				<th data-options="field:'tid',hidden:'true'">tid</th>
+				<th data-options="field:'vNumber',width:100">期号</th>
+				<th data-options="field:'vPerPosition1',width:80,align:'right'">红一</th>
+				<th data-options="field:'vPerPosition2',width:80,align:'right'">红二</th>
+				<th data-options="field:'vPerPosition3',width:80,align:'right'">红三</th>
+				<th data-options="field:'vPerPosition4',width:80,align:'right'">红四</th>
+				<th data-options="field:'vPerPosition5',width:80,align:'right'">红五</th>
+				<th data-options="field:'vPerPosition7',width:80,align:'right'">红六</th>
+				<th data-options="field:'vSufPosition1',width:80,align:'right'">篮球</th>
+
+				<th data-options="field:'unitcost',width:80,align:'right'">Unit Cost</th>
+				<th data-options="field:'attr1',width:250">Attribute</th>
+				<th data-options="field:'status',width:60,align:'center'">Status</th>
+			</tr>
+		</thead>
+	</table>
+</body>
+</html>
